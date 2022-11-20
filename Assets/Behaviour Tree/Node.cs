@@ -2,17 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Node : MonoBehaviour
+public class Node
 {
-    // Start is called before the first frame update
-    void Start()
+    public enum Status {    SUCCESS, RUNNING, FAILURE   };
+    public Status status;
+    public List<Node> children = new();
+    public int CurrentChild = 0;
+    public string name;
+
+    public Node() { }
+    public Node(string n)
     {
-        
+        name = n;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void AddChild(Node n)
     {
-        
+        children.Add(n);
     }
+
 }
