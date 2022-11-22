@@ -7,22 +7,21 @@ public class Leaf : Node
     public delegate Status Tick();
     public Tick ProcessMethod;
 
-
     public Leaf() { }
 
-    public Leaf(string n, Tick tick)
+    public Leaf(string n, Tick pm)
     {
         name = n;
-        ProcessMethod = tick;
+        ProcessMethod = pm;
     }
 
     public override Status Process()
     {
         if(ProcessMethod != null)
         {
+            Debug.Log(ProcessMethod);
             return ProcessMethod();
         }
-
         return Status.FAILURE;
     }
 }

@@ -16,7 +16,7 @@ public class BehaviourTree : Node
 
     public override Status Process()
     {
-        return children[CurrentChild].Process();
+        return children[currentChild].Process();
     }
 
     struct NodeLevel
