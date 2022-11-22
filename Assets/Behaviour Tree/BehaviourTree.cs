@@ -14,6 +14,11 @@ public class BehaviourTree : Node
         name = n;
     }
 
+    public override Status Process()
+    {
+        return children[CurrentChild].Process();
+    }
+
     struct NodeLevel
     {
         public int level;
@@ -35,7 +40,7 @@ public class BehaviourTree : Node
                 nodeStack.Push(new NodeLevel { level = NextNode.level + 1, node = item});
             }
         }
-        Debug.Log(treePrintout);
+        //Debug.Log(treePrintout);
     }
 
 }
