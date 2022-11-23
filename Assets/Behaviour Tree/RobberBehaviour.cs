@@ -15,7 +15,7 @@ public class RobberBehaviour : MonoBehaviour
     
     public enum ActionState { IDLE, WORKING };
     ActionState state = ActionState.IDLE;
-
+    
     Node.Status treeStatus = Node.Status.RUNNING;
 
     public float distanceToTarget;
@@ -44,20 +44,43 @@ public class RobberBehaviour : MonoBehaviour
 
     public Node.Status GoToBackDoor()
     {
-        return GoToLocation(BackDoor.transform.position);
+        return GoToDoor(BackDoor);
     }
     public Node.Status GoToFrontDoor()
     {
-        return GoToLocation(FrontDoor.transform.position);
+        return GoToDoor(FrontDoor);
     }
     public Node.Status GoToDiamond()
     {
-        return GoToLocation(diamond.transform.position);
+        Node.Status s = GoToLocation(diamond.transform.position);
+        if(s==Node.Status.SUCCESS)
+        {
+            diamond.transform.SetParent(transform);
+            return Node.Status.SUCCESS;
+        }
+
+        return s;
     }
 
     public Node.Status GoToVan()
     {
         return GoToLocation(van.transform.position);
+    }
+
+    public Node.Status GoToDoor(GameObject door)
+    {
+        Node.Status s = GoToLocation(door.transform.position);
+        if(s == Node.Status.SUCCESS)
+        {
+            if(!door.GetComponent<Lock>().isLocked)
+            {
+                door.SetActive(false);
+                return Node.Status.SUCCESS;
+            }
+            return Node.Status.FAILURE;
+        }
+
+        return s;
     }
 
     Node.Status GoToLocation(Vector3 destination)

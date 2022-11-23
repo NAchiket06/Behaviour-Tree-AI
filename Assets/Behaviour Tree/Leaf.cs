@@ -19,7 +19,6 @@ public class Leaf : Node
     {
         if(ProcessMethod != null)
         {
-            Debug.Log(ProcessMethod);
             return ProcessMethod();
         }
         return Status.FAILURE;
