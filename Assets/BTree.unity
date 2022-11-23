@@ -2381,6 +2381,7 @@ MonoBehaviour:
   BackDoor: {fileID: 919599686}
   FrontDoor: {fileID: 1791870521}
   distanceToTarget: 0
+  money: 671
 --- !u!195 &818217142
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2729,7 +2730,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87426b61dc155dd448fd31b8a81e90e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isLocked: 0
+  isLocked: 1
 --- !u!1 &925317490
 GameObject:
   m_ObjectHideFlags: 0
@@ -5416,7 +5417,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87426b61dc155dd448fd31b8a81e90e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isLocked: 1
+  isLocked: 0
 --- !u!4 &1796479289 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a5028766c6c2448878d200bb33de1f59, type: 3}
