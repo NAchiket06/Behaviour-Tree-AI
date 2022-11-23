@@ -15,7 +15,7 @@ public class Sequence : Node
         if(childstatus == Status.RUNNING) return Status.RUNNING;
         else if(childstatus == Status.FAILURE)
         {
-            Debug.Log("Child status returned failure");
+            //Debug.Log("Child status returned failure");
             return childstatus;
         }
 
