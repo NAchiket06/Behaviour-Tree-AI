@@ -14,10 +14,13 @@ public class BTAgent : MonoBehaviour
     public Node.Status treeStatus = Node.Status.RUNNING;
     public float distanceToTarget;
 
+    WaitForSeconds waitForSeconds;
     public void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         tree = new();
+        waitForSeconds = new(Random.Range(0.1f, 1f));
+        StartCoroutine(Behave());
     }
 
     public Node.Status GoToLocation(Vector3 destination)
@@ -42,9 +45,12 @@ public class BTAgent : MonoBehaviour
         return Node.Status.RUNNING;
     }
 
-    private void Update()
+    public  IEnumerator Behave()
     {
-        if(treeStatus != Node.Status.SUCCESS)
+        while(true)
+        {
             treeStatus = tree.Process();
+            yield return waitForSeconds;
+        }
     }
 }

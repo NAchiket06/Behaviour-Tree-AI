@@ -35,6 +35,8 @@ public class RobberBehaviour : BTAgent
         steal.AddChild(goToDiamond);
         steal.AddChild(goToVan);
         tree.AddChild(steal);
+        //StartCoroutine(Behave());
+
     }
 
     public Node.Status HasMoney()
