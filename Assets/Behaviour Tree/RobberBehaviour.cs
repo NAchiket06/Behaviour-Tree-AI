@@ -4,25 +4,18 @@ using UnityEngine;
 using UnityEngine.AI;
 
 
-public class RobberBehaviour : MonoBehaviour
+public class RobberBehaviour : BTAgent
 {
-    BehaviourTree tree;
     public GameObject diamond;
     public GameObject van;
     public GameObject BackDoor;
     public GameObject FrontDoor;
-    NavMeshAgent agent;
-    public enum ActionState { IDLE, WORKING };
-    ActionState state = ActionState.IDLE;
-    Node.Status treeStatus = Node.Status.RUNNING;
-    public float distanceToTarget;
+
     [Range(0, 1000)] public int money = 800;
 
-    private void Start()
+    new void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-
-        tree = new();
+        base.Start();
         Sequence steal = new("Steal Something");
         Leaf hasGotMoney = new("Has Hot Money", HasMoney);
         Leaf goToBackDoor = new("Go To Back Door", GoToBackDoor);
@@ -42,7 +35,6 @@ public class RobberBehaviour : MonoBehaviour
         steal.AddChild(goToDiamond);
         steal.AddChild(goToVan);
         tree.AddChild(steal);
-
     }
 
     public Node.Status HasMoney()
@@ -102,31 +94,9 @@ public class RobberBehaviour : MonoBehaviour
         return s;
     }
 
-    Node.Status GoToLocation(Vector3 destination)
-    {
-        distanceToTarget = Vector3.Distance(destination, transform.localPosition);
-        if(state == ActionState.IDLE)
-        {
-            //print("State is idle");
-            agent.SetDestination(destination);
-            state = ActionState.WORKING;
-        }
-        else if(distanceToTarget >=3)
-        {
-            state = ActionState.WORKING;
-            return Node.Status.FAILURE;
-        }
-        else if(distanceToTarget < 3)
-        {
-            state = ActionState.IDLE;
-            return Node.Status.SUCCESS; 
-        }
-        return Node.Status.RUNNING;
-    }
-
     private void Update()
     {
-        if(treeStatus != Node.Status.SUCCESS)
+        if (treeStatus != Node.Status.SUCCESS)
             treeStatus = tree.Process();
     }
 }

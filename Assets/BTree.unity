@@ -2376,12 +2376,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e404e89314dbed1498be9671bd38b90d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agent: {fileID: 0}
+  state: 0
+  treeStatus: 1
+  distanceToTarget: 0
   diamond: {fileID: 1770500312}
   van: {fileID: 1376545013}
   BackDoor: {fileID: 919599686}
   FrontDoor: {fileID: 1791870521}
-  distanceToTarget: 0
-  money: 172
+  money: 433
 --- !u!195 &818217142
 NavMeshAgent:
   m_ObjectHideFlags: 0
