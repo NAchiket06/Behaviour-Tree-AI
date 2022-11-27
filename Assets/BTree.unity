@@ -2381,7 +2381,7 @@ MonoBehaviour:
   BackDoor: {fileID: 919599686}
   FrontDoor: {fileID: 1791870521}
   distanceToTarget: 0
-  money: 671
+  money: 172
 --- !u!195 &818217142
 NavMeshAgent:
   m_ObjectHideFlags: 0
