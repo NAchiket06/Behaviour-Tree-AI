@@ -28,7 +28,6 @@ public class BTAgent : MonoBehaviour
         distanceToTarget = Vector3.Distance(destination, transform.localPosition);
         if(state == ActionState.IDLE)
         {
-            //print("State is idle");
             agent.SetDestination(destination);
             state = ActionState.WORKING;
         }

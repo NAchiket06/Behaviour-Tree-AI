@@ -7,6 +7,7 @@ using UnityEngine.AI;
 public class RobberBehaviour : BTAgent
 {
     public GameObject diamond;
+    public GameObject painting;
     public GameObject van;
     public GameObject BackDoor;
     public GameObject FrontDoor;
@@ -22,6 +23,7 @@ public class RobberBehaviour : BTAgent
         Leaf goToDiamond = new("Go To Diamond",GoToDiamond);
         Leaf goToFrontDoor = new("Go To Front Door", GoToFrontDoor);
         Leaf goToVan = new("Go to Van",GoToVan);
+        Leaf goToPainting = new("Go To Painting", GoToPainting);
 
         Inverter invertMoney = new("Invert Money");
         invertMoney.AddChild(hasGotMoney);
@@ -30,13 +32,17 @@ public class RobberBehaviour : BTAgent
         OpenDoor.AddChild(goToFrontDoor);
         OpenDoor.AddChild(goToBackDoor);
 
+        Selector selectObjectToSteal = new("Select Object To Steal");
+        selectObjectToSteal.AddChild(goToDiamond);
+        selectObjectToSteal.AddChild(goToPainting);
+
         steal.AddChild(invertMoney);
         steal.AddChild(OpenDoor);
-        steal.AddChild(goToDiamond);
+        steal.AddChild(selectObjectToSteal);
+        steal.AddChild(goToVan);
+        steal.AddChild(selectObjectToSteal);
         steal.AddChild(goToVan);
         tree.AddChild(steal);
-        //StartCoroutine(Behave());
-
     }
 
     public Node.Status HasMoney()
@@ -54,6 +60,7 @@ public class RobberBehaviour : BTAgent
     }
     public Node.Status GoToDiamond()
     {
+        if (!diamond.activeInHierarchy) return Node.Status.FAILURE;
         Node.Status s = GoToLocation(diamond.transform.position);
         if(s==Node.Status.SUCCESS)
         {
@@ -64,7 +71,20 @@ public class RobberBehaviour : BTAgent
 
         return s;
     }
+    public Node.Status GoToPainting()
+    {
+        if (!painting.activeInHierarchy) return Node.Status.FAILURE;
 
+        Node.Status s = GoToLocation(painting.transform.position);
+        if (s == Node.Status.SUCCESS)
+        {
+            painting.transform.SetParent(transform);
+
+            return Node.Status.SUCCESS;
+        }
+
+        return s;
+    }
     public Node.Status GoToVan()
     {
         Node.Status s = GoToLocation(van.transform.position);
@@ -87,7 +107,7 @@ public class RobberBehaviour : BTAgent
         {
             if(!door.GetComponent<Lock>().isLocked)
             {
-                door.SetActive(false);
+                door.GetComponent<NavMeshObstacle>().enabled = false;
                 return Node.Status.SUCCESS;
             }
             return Node.Status.FAILURE;
