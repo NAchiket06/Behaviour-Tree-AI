@@ -9,13 +9,18 @@ public class Node
     public List<Node> children = new();
     public int currentChild = 0;
     public string name;
+    public int SortOrder;
 
     public Node() { }
     public Node(string n)
     {
         name = n;
     }
-
+    public Node(string n,int order)
+    {
+        name = n;
+        SortOrder = order;
+    }
     public virtual Status Process()
     {
         return children[currentChild].Process();

@@ -12,6 +12,8 @@ public class RobberBehaviour : BTAgent
     public GameObject BackDoor;
     public GameObject FrontDoor;
 
+    GameObject pickup;
+
     [Range(0, 1000)] public int money = 800;
 
     new void Start()
@@ -20,10 +22,10 @@ public class RobberBehaviour : BTAgent
         Sequence steal = new("Steal Something");
         Leaf hasGotMoney = new("Has Hot Money", HasMoney);
         Leaf goToBackDoor = new("Go To Back Door", GoToBackDoor);
-        Leaf goToDiamond = new("Go To Diamond",GoToDiamond);
+        Leaf goToDiamond = new("Go To Diamond",GoToDiamond,2);
         Leaf goToFrontDoor = new("Go To Front Door", GoToFrontDoor);
         Leaf goToVan = new("Go to Van",GoToVan);
-        Leaf goToPainting = new("Go To Painting", GoToPainting);
+        Leaf goToPainting = new("Go To Painting", GoToPainting,1);
 
         Inverter invertMoney = new("Invert Money");
         invertMoney.AddChild(hasGotMoney);
@@ -32,7 +34,7 @@ public class RobberBehaviour : BTAgent
         OpenDoor.AddChild(goToFrontDoor);
         OpenDoor.AddChild(goToBackDoor);
 
-        Selector selectObjectToSteal = new("Select Object To Steal");
+        PSelector selectObjectToSteal = new("Select Object To Steal");
         selectObjectToSteal.AddChild(goToDiamond);
         selectObjectToSteal.AddChild(goToPainting);
 
@@ -65,7 +67,7 @@ public class RobberBehaviour : BTAgent
         if(s==Node.Status.SUCCESS)
         {
             diamond.transform.SetParent(transform);
-
+            pickup = diamond;
             return Node.Status.SUCCESS;
         }
 
@@ -74,12 +76,11 @@ public class RobberBehaviour : BTAgent
     public Node.Status GoToPainting()
     {
         if (!painting.activeInHierarchy) return Node.Status.FAILURE;
-
         Node.Status s = GoToLocation(painting.transform.position);
         if (s == Node.Status.SUCCESS)
         {
             painting.transform.SetParent(transform);
-
+            pickup = painting;
             return Node.Status.SUCCESS;
         }
 
@@ -90,7 +91,8 @@ public class RobberBehaviour : BTAgent
         Node.Status s = GoToLocation(van.transform.position);
         if(s== Node.Status.SUCCESS)
         {
-            diamond.transform.SetParent(van.transform);
+            pickup.transform.SetParent(van.transform);
+            pickup.SetActive(false);
             money += 200;
             return Node.Status.SUCCESS;
         }
