@@ -6,6 +6,7 @@ using UnityEngine;
 public class PSelector : Node
 {
     Node[] nodeArray;
+    bool ordered = false;
     public PSelector(string n)
     {
         name = n;
@@ -29,12 +30,17 @@ public class PSelector : Node
 
     public override Status Process()
     {
-        OrderNodes();
+        if(!ordered)
+        {
+            OrderNodes();
+            ordered = true;
+        }
         Status childStatus = children[currentChild].Process();
         if (childStatus == Status.RUNNING) return Status.RUNNING;
         if (childStatus == Status.SUCCESS)
         {
             children[currentChild].SortOrder = 1;
+            ordered = false;
             currentChild = 0;
             return Status.SUCCESS;
         }
@@ -46,6 +52,7 @@ public class PSelector : Node
         currentChild++;
         if (currentChild >= children.Count)
         {
+            ordered = false;
             currentChild = 0;
             return Status.FAILURE;
         }
