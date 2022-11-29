@@ -34,8 +34,13 @@ public class PSelector : Node
         if (childStatus == Status.RUNNING) return Status.RUNNING;
         if (childStatus == Status.SUCCESS)
         {
+            children[currentChild].SortOrder = 1;
             currentChild = 0;
             return Status.SUCCESS;
+        }
+        else
+        {
+            children[currentChild].SortOrder = 10;
         }
 
         currentChild++;

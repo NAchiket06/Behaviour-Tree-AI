@@ -16,14 +16,16 @@ public class RobberBehaviour : BTAgent
 
     [Range(0, 1000)] public int money = 800;
 
+    Leaf goToBackDoor;
+    Leaf goToFrontDoor;
     new void Start()
     {
         base.Start();
         Sequence steal = new("Steal Something");
         Leaf hasGotMoney = new("Has Hot Money", HasMoney);
-        Leaf goToBackDoor = new("Go To Back Door", GoToBackDoor);
+        goToBackDoor = new("Go To Back Door", GoToBackDoor);
         Leaf goToDiamond = new("Go To Diamond",GoToDiamond,2);
-        Leaf goToFrontDoor = new("Go To Front Door", GoToFrontDoor);
+        goToFrontDoor = new("Go To Front Door", GoToFrontDoor);
         Leaf goToVan = new("Go to Van",GoToVan);
         Leaf goToPainting = new("Go To Painting", GoToPainting,1);
 
@@ -54,11 +56,25 @@ public class RobberBehaviour : BTAgent
 
     public Node.Status GoToBackDoor()
     {
-        return GoToDoor(BackDoor);
+        Node.Status s = GoToDoor(BackDoor);
+        if (s == Node.Status.RUNNING)
+        {
+            goToBackDoor.SortOrder = 10;
+        }
+        else
+        {
+            goToBackDoor.SortOrder = 1;
+        }
+
+        return s;
     }
     public Node.Status GoToFrontDoor()
     {
-        return GoToDoor(FrontDoor);
+        Node.Status s = GoToDoor(FrontDoor);
+        if (s == Node.Status.RUNNING) goToFrontDoor.SortOrder = 10;
+        else goToFrontDoor.SortOrder = 1;
+
+        return s;
     }
     public Node.Status GoToDiamond()
     {
