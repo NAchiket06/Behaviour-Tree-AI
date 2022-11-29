@@ -2385,6 +2385,15 @@ MonoBehaviour:
   van: {fileID: 1376545013}
   BackDoor: {fileID: 919599686}
   FrontDoor: {fileID: 1791870521}
+  art:
+  - {fileID: 1904932022}
+  - {fileID: 1101234485}
+  - {fileID: 1922895633}
+  - {fileID: 1544815185}
+  - {fileID: 1959054990}
+  - {fileID: 925317490}
+  - {fileID: 425408384}
+  - {fileID: 915494408}
   money: 0
 --- !u!195 &818217142
 NavMeshAgent:

@@ -12,6 +12,7 @@ public class RobberBehaviour : BTAgent
     public GameObject BackDoor;
     public GameObject FrontDoor;
 
+    public GameObject[] art;
     GameObject pickup;
 
     [Range(0, 1000)] public int money = 800;
@@ -29,6 +30,13 @@ public class RobberBehaviour : BTAgent
         Leaf goToVan = new("Go to Van",GoToVan);
         Leaf goToPainting = new("Go To Painting", GoToPainting,1);
 
+        Leaf goToArt1 = new("Go To Art 1", GoToArt1);
+        Leaf goToArt2 = new("Go To Art 1", GoToArt2);
+        Leaf goToArt3 = new("Go To Art 1", GoToArt3);
+        Leaf goToArt4 = new("Go To Art 1", GoToArt4);
+        Leaf goToArt5 = new("Go To Art 1", GoToArt5);
+
+
         Inverter invertMoney = new("Invert Money");
         invertMoney.AddChild(hasGotMoney);
 
@@ -36,9 +44,13 @@ public class RobberBehaviour : BTAgent
         OpenDoor.AddChild(goToFrontDoor);
         OpenDoor.AddChild(goToBackDoor);
 
-        PSelector selectObjectToSteal = new("Select Object To Steal");
+        RSelector selectObjectToSteal = new("Select Object To Steal");
         selectObjectToSteal.AddChild(goToDiamond);
-        selectObjectToSteal.AddChild(goToPainting);
+        selectObjectToSteal.AddChild(goToArt1);
+        selectObjectToSteal.AddChild(goToArt2);
+        selectObjectToSteal.AddChild(goToArt3);
+        selectObjectToSteal.AddChild(goToArt4);
+        selectObjectToSteal.AddChild(goToArt5);
 
         steal.AddChild(invertMoney);
         steal.AddChild(OpenDoor);
@@ -97,6 +109,76 @@ public class RobberBehaviour : BTAgent
         {
             painting.transform.SetParent(transform);
             pickup = painting;
+            return Node.Status.SUCCESS;
+        }
+
+        return s;
+    }
+
+    public Node.Status GoToArt1()
+    {
+        if (!art[0].activeInHierarchy) return Node.Status.FAILURE;
+        Node.Status s = GoToLocation(art[0].transform.position);
+        if (s == Node.Status.SUCCESS)
+        {
+            art[0].transform.SetParent(transform);
+            pickup = art[0];
+            return Node.Status.SUCCESS;
+        }
+
+        return s;
+    }
+
+    public Node.Status GoToArt2()
+    {
+        if (!art[1].activeInHierarchy) return Node.Status.FAILURE;
+        Node.Status s = GoToLocation(art[1].transform.position);
+        if (s == Node.Status.SUCCESS)
+        {
+            art[1].transform.SetParent(transform);
+            pickup = art[1];
+            return Node.Status.SUCCESS;
+        }
+
+        return s;
+    }
+
+    public Node.Status GoToArt3()
+    {
+        if (!art[2].activeInHierarchy) return Node.Status.FAILURE;
+        Node.Status s = GoToLocation(art[2].transform.position);
+        if (s == Node.Status.SUCCESS)
+        {
+            art[2].transform.SetParent(transform);
+            pickup = art[2];
+            return Node.Status.SUCCESS;
+        }
+
+        return s;
+    }
+
+    public Node.Status GoToArt4()
+    {
+        if (!art[3].activeInHierarchy) return Node.Status.FAILURE;
+        Node.Status s = GoToLocation(art[3].transform.position);
+        if (s == Node.Status.SUCCESS)
+        {
+            art[3].transform.SetParent(transform);
+            pickup = art[3];
+            return Node.Status.SUCCESS;
+        }
+
+        return s;
+    }
+
+    public Node.Status GoToArt5()
+    {
+        if (!art[4].activeInHierarchy) return Node.Status.FAILURE;
+        Node.Status s = GoToLocation(art[4].transform.position);
+        if (s == Node.Status.SUCCESS)
+        {
+            art[4].transform.SetParent(transform);
+            pickup = art[4];
             return Node.Status.SUCCESS;
         }
 
