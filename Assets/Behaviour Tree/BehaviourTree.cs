@@ -41,7 +41,7 @@ public class BehaviourTree : Node
                 nodeStack.Push(new NodeLevel { level = NextNode.level + 1, node = item});
             }
         }
-        //Debug.Log(treePrintout);
+        Debug.Log(treePrintout);
     }
 
 }

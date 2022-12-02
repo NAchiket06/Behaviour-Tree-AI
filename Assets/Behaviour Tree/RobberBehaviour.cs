@@ -45,12 +45,18 @@ public class RobberBehaviour : BTAgent
         OpenDoor.AddChild(goToBackDoor);
 
         RSelector selectObjectToSteal = new("Select Object To Steal");
+
+        for (int i = 0; i < art.Length; i++)
+        {
+            Leaf goToArt = new("Go to " + art[i].name, i, GoToArt);
+            selectObjectToSteal.AddChild(goToArt);
+        }
         selectObjectToSteal.AddChild(goToDiamond);
-        selectObjectToSteal.AddChild(goToArt1);
-        selectObjectToSteal.AddChild(goToArt2);
-        selectObjectToSteal.AddChild(goToArt3);
-        selectObjectToSteal.AddChild(goToArt4);
-        selectObjectToSteal.AddChild(goToArt5);
+        //selectObjectToSteal.AddChild(goToArt1);
+        //selectObjectToSteal.AddChild(goToArt2);
+        //selectObjectToSteal.AddChild(goToArt3);
+        //selectObjectToSteal.AddChild(goToArt4);
+        //selectObjectToSteal.AddChild(goToArt5);
 
         steal.AddChild(invertMoney);
         steal.AddChild(OpenDoor);
@@ -59,6 +65,8 @@ public class RobberBehaviour : BTAgent
         steal.AddChild(selectObjectToSteal);
         steal.AddChild(goToVan);
         tree.AddChild(steal);
+
+        tree.PrintTree();
     }
 
     public Node.Status HasMoney()
@@ -115,6 +123,19 @@ public class RobberBehaviour : BTAgent
         return s;
     }
 
+    public Node.Status GoToArt(int i)
+    {
+        if (!art[i].activeInHierarchy) return Node.Status.FAILURE;
+        Node.Status s = GoToLocation(art[i].transform.position);
+        if (s == Node.Status.SUCCESS)
+        {
+            art[i].transform.SetParent(transform);
+            pickup = art[i];
+            return Node.Status.SUCCESS;
+        }
+
+        return s;
+    }
     public Node.Status GoToArt1()
     {
         if (!art[0].activeInHierarchy) return Node.Status.FAILURE;
