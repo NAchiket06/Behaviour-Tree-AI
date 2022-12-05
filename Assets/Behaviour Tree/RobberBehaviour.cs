@@ -30,8 +30,16 @@ public class RobberBehaviour : BTAgent
         Leaf goToVan = new("Go to Van",GoToVan);
         Leaf goToPainting = new("Go To Painting", GoToPainting,1);
 
+
+        Sequence runAway = new("Run Away");
+        Leaf canSeeCop = new("Can See Cop", CanSeeCop);
+        Leaf flee = new("Flee From Cop", FleeFromCop);
+
         Inverter invertMoney = new("Invert Money");
         invertMoney.AddChild(hasGotMoney);
+
+        Inverter cantSeeCop = new("Cant See Cop");
+        cantSeeCop.AddChild(canSeeCop);
 
         Selector OpenDoor = new("Open Door");
         OpenDoor.AddChild(goToFrontDoor);
@@ -48,19 +56,24 @@ public class RobberBehaviour : BTAgent
 
         steal.AddChild(invertMoney);
         steal.AddChild(OpenDoor);
+
+        steal.AddChild(cantSeeCop);
+         
         steal.AddChild(selectObjectToSteal);
         steal.AddChild(goToVan);
         steal.AddChild(selectObjectToSteal);
         steal.AddChild(goToVan);
 
 
-        Sequence runAway = new("Run Away");
-        Leaf canSeeCop = new("Can See Cop", CanSeeCop);
-        Leaf flee = new("Flee From Cop", FleeFromCop);
         runAway.AddChild(canSeeCop);
         runAway.AddChild(flee);
 
-        tree.AddChild(runAway);
+
+        Selector bThief = new("Be A Thief");
+        bThief.AddChild(steal);
+        bThief.AddChild(runAway);
+
+        tree.AddChild(bThief);
 
         tree.PrintTree();
     }

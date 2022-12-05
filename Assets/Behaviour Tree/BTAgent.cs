@@ -48,7 +48,6 @@ public class BTAgent : MonoBehaviour
     {
         if(state == ActionState.IDLE)
         {
-            print("Set remembered location");
             rememberedLocation = transform.position + (transform.position - location).normalized * distance;
         }
 
