@@ -36,11 +36,12 @@ public class BTAgent : MonoBehaviour
             {
                 if(hitInfo.collider.gameObject.CompareTag(tag))
                 {
+                    Debug.Log("Can See Cop");
                     return Node.Status.SUCCESS;
                 }
             }
         }
-
+        Debug.Log("Cannot See Cop");
         return Node.Status.FAILURE; 
     }
 

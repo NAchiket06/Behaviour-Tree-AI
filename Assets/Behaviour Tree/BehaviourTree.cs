@@ -16,7 +16,9 @@ public class BehaviourTree : Node
 
     public override Status Process()
     {
+
         if (children.Count == 0) return Status.SUCCESS;
+        //Debug.Log(children[currentChild].Process());
         return children[currentChild].Process();
     }
 
