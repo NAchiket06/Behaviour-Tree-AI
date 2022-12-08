@@ -27,56 +27,53 @@ public class BTAgent : MonoBehaviour
 
     public Node.Status CanSee(Vector3 target, string tag, float distance, float maxAngle)
     {
-        Vector3 directionToTarget = target - transform.position;
+        Vector3 directionToTarget = target - this.transform.position;
         float angle = Vector3.Angle(directionToTarget, this.transform.forward);
-        if(angle <= maxAngle || directionToTarget.magnitude <= distance)
+
+        if (angle <= maxAngle || directionToTarget.magnitude <= distance)
         {
             RaycastHit hitInfo;
-            if(Physics.Raycast(transform.position, directionToTarget, out hitInfo))
+            if (Physics.Raycast(this.transform.position, directionToTarget, out hitInfo))
             {
-                if(hitInfo.collider.gameObject.CompareTag(tag))
+                if (hitInfo.collider.gameObject.CompareTag(tag))
                 {
-                    Debug.Log("Can See Cop");
                     return Node.Status.SUCCESS;
                 }
             }
         }
-        Debug.Log("Cannot See Cop");
-        return Node.Status.FAILURE; 
+        return Node.Status.FAILURE;
     }
-
-    public Node.Status Flee(Vector3 location,float distance)
+    public Node.Status Flee(Vector3 location, float distance)
     {
-        if(state == ActionState.IDLE)
+        if (state == ActionState.IDLE)
         {
-            rememberedLocation = transform.position + (transform.position - location).normalized * distance;
+            rememberedLocation = this.transform.position + (transform.position - location).normalized * distance;
         }
-
         return GoToLocation(rememberedLocation);
     }
 
     public Node.Status GoToLocation(Vector3 destination)
     {
-        distanceToTarget = Vector3.Distance(destination, transform.localPosition);
-        if(state == ActionState.IDLE)
+        float distanceToTarget = Vector3.Distance(destination, this.transform.position);
+        if (state == ActionState.IDLE)
         {
             agent.SetDestination(destination);
             state = ActionState.WORKING;
         }
-        else if(distanceToTarget >=3)
-        {
-            state = ActionState.WORKING;
-            return Node.Status.FAILURE;
-        }
-        else if(distanceToTarget < 3)
+        else if (Vector3.Distance(agent.pathEndPosition, destination) >= 2)
         {
             state = ActionState.IDLE;
-            return Node.Status.SUCCESS; 
+            return Node.Status.FAILURE;
+        }
+        else if (distanceToTarget < 2)
+        {
+            state = ActionState.IDLE;
+            return Node.Status.SUCCESS;
         }
         return Node.Status.RUNNING;
     }
 
-    public  IEnumerator Behave()
+    public IEnumerator Behave()
     {
         while(true)
         {

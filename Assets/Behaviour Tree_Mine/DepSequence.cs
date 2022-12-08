@@ -4,36 +4,35 @@ using UnityEngine;
 using UnityEngine.AI;
 public class DepSequence : Node
 {
-    BehaviourTree dependency;
+    BehaviourTree dependancy;
     NavMeshAgent agent;
-
-    public DepSequence(string n,BehaviourTree d, NavMeshAgent a)
+    public DepSequence(string n, BehaviourTree d, NavMeshAgent a)
     {
         name = n;
-        dependency = d;
+        dependancy = d;
         agent = a;
     }
 
     public override Status Process()
     {
-        if(dependency.Process() == Status.FAILURE)
+        if (dependancy.Process() == Status.FAILURE)
         {
             agent.ResetPath();
-            foreach(Node n in children)
+            // Reset all children
+            foreach (Node n in children)
             {
+
                 n.Reset();
             }
             return Status.FAILURE;
         }
 
         Status childstatus = children[currentChild].Process();
-        if(childstatus == Status.RUNNING) return Status.RUNNING;
-        else if(childstatus == Status.FAILURE)
-        {
+        if (childstatus == Status.RUNNING) return Status.RUNNING;
+        if (childstatus == Status.FAILURE)
             return childstatus;
-        }
 
-        currentChild++; 
+        currentChild++;
         if (currentChild >= children.Count)
         {
             currentChild = 0;
@@ -42,4 +41,6 @@ public class DepSequence : Node
 
         return Status.RUNNING;
     }
+
+
 }
