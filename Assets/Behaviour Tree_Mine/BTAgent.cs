@@ -32,8 +32,7 @@ public class BTAgent : MonoBehaviour
 
         if (angle <= maxAngle || directionToTarget.magnitude <= distance)
         {
-            RaycastHit hitInfo;
-            if (Physics.Raycast(this.transform.position, directionToTarget, out hitInfo))
+            if (Physics.Raycast(this.transform.position, directionToTarget, out RaycastHit hitInfo))
             {
                 if (hitInfo.collider.gameObject.CompareTag(tag))
                 {
