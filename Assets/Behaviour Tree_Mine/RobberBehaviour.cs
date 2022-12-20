@@ -112,12 +112,17 @@ public class RobberBehaviour : BTAgent
 
         DepSequence steal = new("Steal Something", stealConditions, agent);
         //steal.AddChild(invertMoney);
+
         steal.AddChild(OpenDoor);
         steal.AddChild(selectObjectToSteal);
         steal.AddChild(goToVan);
 
+        Selector stealWithFallback = new("Steal With Fallback");
+        stealWithFallback.AddChild(steal);
+        stealWithFallback.AddChild(goToVan);
+
         Selector bThief = new("Be A Thief");
-        bThief.AddChild(steal);
+        bThief.AddChild(stealWithFallback);
         bThief.AddChild(runAway);
 
         tree.AddChild(bThief);
