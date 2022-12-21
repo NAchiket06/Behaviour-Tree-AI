@@ -27,11 +27,16 @@ public class PatreonBehaviour : BTAgent
 
         Leaf isBored = new("Is Bored ?", IsBored);
 
+        BehaviourTree whileBored = new();
+        whileBored.AddChild(isBored);
+
+        Loop LookAtPaintings = new("Look", whileBored);
+        LookAtPaintings.AddChild(selectObejctToView);
 
         Sequence viewArt = new("View Art");
         viewArt.AddChild(isBored);
         viewArt.AddChild(goToFrontDoor);
-        viewArt.AddChild(selectObejctToView);
+        viewArt.AddChild(LookAtPaintings);
         viewArt.AddChild(goToHome);
 
         Selector bePatreon = new("Be an Art Patreon");
@@ -57,7 +62,7 @@ public class PatreonBehaviour : BTAgent
         Node.Status s = GoToLocation(art[i].transform.position);
         if(s == Node.Status.SUCCESS)
         {
-            boredom = Mathf.Clamp(boredom - 50, 0, 1000);
+            boredom = Mathf.Clamp(boredom - 40, 0, 1000);
         }
         return s;
     }
