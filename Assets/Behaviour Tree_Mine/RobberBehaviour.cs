@@ -222,22 +222,6 @@ public class RobberBehaviour : BTAgent
 
     }
 
-    public Node.Status GoToDoor(GameObject door)
-    {
-        Node.Status s = GoToLocation(door.transform.position);
-
-        if(s == Node.Status.SUCCESS)
-        {
-            if(!door.GetComponent<Lock>().isLocked)
-            {
-                door.GetComponent<NavMeshObstacle>().enabled = false;
-                return Node.Status.SUCCESS;
-            }
-            return Node.Status.FAILURE;
-        }
-
-        return s;
-    }
 
     private void Update()
     {
