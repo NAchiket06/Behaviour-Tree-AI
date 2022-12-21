@@ -128,8 +128,18 @@ public class RobberBehaviour : BTAgent
         tree.AddChild(bThief);
 
         tree.PrintTree();
+
+        StartCoroutine(DecreaseMoney());
     }
 
+    IEnumerator DecreaseMoney()
+    {
+        while(true)
+        {
+            money = Mathf.Clamp(money - Random.Range(10, 100), 0, 1000);
+            yield return new WaitForSeconds(Random.Range(3f, 10f));
+        }
+    }
     public Node.Status CanSeeCop()
     {
         return CanSee(Cop.transform.position, "Cop", 10, 10);
@@ -210,8 +220,9 @@ public class RobberBehaviour : BTAgent
     public Node.Status GoToVan()
     {
         Node.Status s = GoToLocation(van.transform.position);
-        if(s== Node.Status.SUCCESS)
+        if(s== Node.Status.SUCCESS && pickup != null)
         {
+            pickup = null;
             pickup.transform.SetParent(van.transform);
             pickup.SetActive(false);
             money += 200;

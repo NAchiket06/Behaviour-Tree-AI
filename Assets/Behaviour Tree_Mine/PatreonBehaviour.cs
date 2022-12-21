@@ -29,6 +29,7 @@ public class PatreonBehaviour : BTAgent
 
 
         Sequence viewArt = new("View Art");
+        viewArt.AddChild(isBored);
         viewArt.AddChild(goToFrontDoor);
         viewArt.AddChild(selectObejctToView);
         viewArt.AddChild(goToHome);
@@ -37,6 +38,17 @@ public class PatreonBehaviour : BTAgent
         bePatreon.AddChild(viewArt);
 
         tree.AddChild(bePatreon);
+
+        StartCoroutine(IncreaseBoredom());
+    }
+
+    IEnumerator IncreaseBoredom()
+    {
+        while(true)
+        {
+            boredom = Mathf.Clamp(boredom + 20, 0, 1000);
+            yield return new WaitForSeconds(Random.Range(5f,10f));
+        }
     }
 
     public Node.Status GoToArt(int i)
@@ -45,7 +57,7 @@ public class PatreonBehaviour : BTAgent
         Node.Status s = GoToLocation(art[i].transform.position);
         if(s == Node.Status.SUCCESS)
         {
-            boredom = Mathf.Clamp(boredom + 100, 0, 1000);
+            boredom = Mathf.Clamp(boredom - 50, 0, 1000);
         }
         return s;
     }
@@ -66,7 +78,7 @@ public class PatreonBehaviour : BTAgent
     public Node.Status IsBored()
     {
         if (boredom <= 100) return Node.Status.FAILURE;
-        else return Node.Status.FAILURE;
+        else return Node.Status.SUCCESS;
     }
 
 }
