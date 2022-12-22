@@ -10,6 +10,8 @@ public class Blackboard : MonoBehaviour
     public float timeOfDay;
     [SerializeField] private TextMeshProUGUI clock;
 
+    public GameObject patreon;
+
     static Blackboard instance;
     public static Blackboard Instance
     {
@@ -55,6 +57,19 @@ public class Blackboard : MonoBehaviour
             timeOfDay = (timeOfDay+1) % 23;
             clock.text = timeOfDay.ToString() + ":00";
         }
+    }
+
+    public GameObject RegisterPatreon(GameObject p)
+    {
+        if (patreon == null)
+            patreon = p;
+
+        return patreon;
+    }
+
+    public void DeRegisterPatreon()
+    {
+        patreon = null;
     }
 
 

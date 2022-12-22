@@ -11,6 +11,7 @@ public class PatreonBehaviour : BTAgent
 
     [Range(0, 1000)] public int boredom = 0;
 
+    public bool ticket = false;
 
     public override void Start()
     {
@@ -31,6 +32,17 @@ public class PatreonBehaviour : BTAgent
         viewArt.AddChild(isOpen);
         viewArt.AddChild(isBored);
         viewArt.AddChild(goToFrontDoor);
+
+        Leaf noTicket = new("Wait for Ticket", NoTicket);
+        Leaf isWaiting = new("Waiting for Worker", IsWaiting);
+
+        BehaviourTree waitForTicket = new();
+        waitForTicket.AddChild(noTicket);
+
+        Loop getTicket = new("Ticket", waitForTicket);
+        getTicket.AddChild(isWaiting);
+
+        viewArt.AddChild(getTicket);
 
         BehaviourTree whileBored = new();
         whileBored.AddChild(isBored);
@@ -93,6 +105,21 @@ public class PatreonBehaviour : BTAgent
     {
         if (boredom <= 100) return Node.Status.FAILURE;
         else return Node.Status.SUCCESS;
+    }
+
+    public Node.Status NoTicket()
+    {
+        if (ticket || IsOpen() == Node.Status.FAILURE) return Node.Status.FAILURE;
+        return Node.Status.SUCCESS;
+    }
+
+    public Node.Status IsWaiting()
+    {
+        if (Blackboard.Instance.RegisterPatreon(this.gameObject) == this.gameObject)
+        {
+            return Node.Status.SUCCESS;
+        }
+        else return Node.Status.FAILURE;
     }
 
 
