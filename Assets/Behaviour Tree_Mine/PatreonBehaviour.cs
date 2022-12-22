@@ -26,7 +26,7 @@ public class PatreonBehaviour : BTAgent
         Leaf goToHome = new("Go To Home", GoToHome);
 
         Leaf isBored = new("Is Bored ?", IsBored);
-
+        Leaf isOpen = new("Is Open?", IsOpen);
         BehaviourTree whileBored = new();
         whileBored.AddChild(isBored);
 
@@ -85,5 +85,12 @@ public class PatreonBehaviour : BTAgent
         if (boredom <= 100) return Node.Status.FAILURE;
         else return Node.Status.SUCCESS;
     }
+
+    public Node.Status IsOpen()
+    {
+        if (Blackboard.Instance.timeOfDay <=9 && Blackboard.Instance.timeOfDay >= 21) return Node.Status.FAILURE;
+        else return Node.Status.SUCCESS;
+    }
+
 
 }
