@@ -50,10 +50,10 @@ public class Blackboard : MonoBehaviour
     {
         while(true)
         {
+            yield return new WaitForSeconds(5f);
             print("updating clock now");
             timeOfDay = (timeOfDay+1) % 23;
             clock.text = timeOfDay.ToString() + ":00";
-            yield return new WaitForSeconds(1f);
         }
     }
 

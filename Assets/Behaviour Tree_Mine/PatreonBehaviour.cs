@@ -24,25 +24,34 @@ public class PatreonBehaviour : BTAgent
 
         Leaf goToFrontDoor = new("Go To Front Door", GoToFrontDoor);
         Leaf goToHome = new("Go To Home", GoToHome);
-
-        Leaf isBored = new("Is Bored ?", IsBored);
+        Leaf isBored = new("Is Bored?", IsBored);
         Leaf isOpen = new("Is Open?", IsOpen);
+
+        Sequence viewArt = new("View Art");
+        viewArt.AddChild(isOpen);
+        viewArt.AddChild(isBored);
+        viewArt.AddChild(goToFrontDoor);
+
         BehaviourTree whileBored = new();
         whileBored.AddChild(isBored);
 
         Loop LookAtPaintings = new("Look", whileBored);
         LookAtPaintings.AddChild(selectObejctToView);
 
-        Sequence viewArt = new("View Art");
-        viewArt.AddChild(isBored);
-        viewArt.AddChild(goToFrontDoor);
         viewArt.AddChild(LookAtPaintings);
         viewArt.AddChild(goToHome);
 
-        Selector bePatreon = new("Be an Art Patreon");
+        BehaviourTree galleryOpenCondition = new();
+        galleryOpenCondition.AddChild(isOpen);
+        DepSequence bePatreon = new("Be an Art Patreon",galleryOpenCondition, agent);
         bePatreon.AddChild(viewArt);
 
-        tree.AddChild(bePatreon);
+
+        Selector viewArtWithFallback = new("View Art with fallback");
+        viewArtWithFallback.AddChild(bePatreon);
+        viewArtWithFallback.AddChild(goToHome);
+
+        tree.AddChild(viewArtWithFallback);
 
         StartCoroutine(IncreaseBoredom());
     }
@@ -82,14 +91,25 @@ public class PatreonBehaviour : BTAgent
 
     public Node.Status IsBored()
     {
+
+        return Node.Status.SUCCESS;
         if (boredom <= 100) return Node.Status.FAILURE;
         else return Node.Status.SUCCESS;
     }
 
     public Node.Status IsOpen()
     {
-        if (Blackboard.Instance.timeOfDay <=9 && Blackboard.Instance.timeOfDay >= 21) return Node.Status.FAILURE;
-        else return Node.Status.SUCCESS;
+
+        if (Blackboard.Instance.timeOfDay <= 9 || Blackboard.Instance.timeOfDay >= 21)
+        {
+            return Node.Status.FAILURE;
+        }
+
+        else
+        {
+            return Node.Status.SUCCESS;
+        }
+
     }
 
 
