@@ -90,6 +90,21 @@ public class BTAgent : MonoBehaviour
     }
 
 
+    public Node.Status IsOpen()
+    {
+
+        if (Blackboard.Instance.timeOfDay <= 9 || Blackboard.Instance.timeOfDay >= 21)
+        {
+            return Node.Status.FAILURE;
+        }
+
+        else
+        {
+            return Node.Status.SUCCESS;
+        }
+
+    }
+
 
     public IEnumerator Behave()
     {
