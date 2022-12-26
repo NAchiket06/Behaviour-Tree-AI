@@ -113,21 +113,19 @@ public class RobberBehaviour : BTAgent
             yield return new WaitForSeconds(Random.Range(3f, 10f));
         }
     }
+
     public Node.Status CanSeeCop()
     {
         return CanSee(Cop.transform.position, "Cop", 10, 10);
     }
-
     public Node.Status FleeFromCop()
     {
         return Flee(Cop.transform.position, 25);
     }
-
     public Node.Status HasMoney()
     {
         return money < 500 ? Node.Status.FAILURE : Node.Status.SUCCESS;
     }
-
     public Node.Status GoToBackDoor()
     {
         Node.Status s = GoToDoor(BackDoor);
