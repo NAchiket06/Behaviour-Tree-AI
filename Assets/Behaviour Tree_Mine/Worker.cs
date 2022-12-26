@@ -20,15 +20,17 @@ public class Worker : BTAgent
 
     }
 
+    GameObject Patreon;
     public Node.Status GoToPatreon()
     {
-        if (Blackboard.Instance.patreon == null) return Node.Status.FAILURE;
+        if (Blackboard.Instance.patreons.Count == 0) return Node.Status.FAILURE;
 
-        Node.Status s = GoToLocation(Blackboard.Instance.patreon.transform.position);
+        Patreon = Blackboard.Instance.patreons.Pop();
+        Node.Status s = GoToLocation(Patreon.transform.position);
         if(s == Node.Status.SUCCESS)
         {
-            Blackboard.Instance.patreon.GetComponent<PatreonBehaviour>().ticket = true;
-            Blackboard.Instance.DeRegisterPatreon();
+            Patreon.GetComponent<PatreonBehaviour>().ticket = true;
+            Patreon = null;
         }
 
         return s;

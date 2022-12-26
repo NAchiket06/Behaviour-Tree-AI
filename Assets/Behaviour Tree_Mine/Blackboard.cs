@@ -10,7 +10,10 @@ public class Blackboard : MonoBehaviour
     public float timeOfDay;
     [SerializeField] private TextMeshProUGUI clock;
 
-    public GameObject patreon;
+    public Stack<GameObject> patreons = new();
+
+    public int OpenTime = 9;
+    public int CloseTime = 21;  
 
     static Blackboard instance;
     public static Blackboard Instance
@@ -53,23 +56,22 @@ public class Blackboard : MonoBehaviour
         while(true)
         {
             yield return new WaitForSeconds(5f);
-            print("updating clock now");
             timeOfDay = (timeOfDay+1) % 23;
+            if (timeOfDay == CloseTime)
+                patreons.Clear();
             clock.text = timeOfDay.ToString() + ":00";
         }
     }
 
-    public GameObject RegisterPatreon(GameObject p)
+    public bool RegisterPatreon(GameObject p)
     {
-        if (patreon == null)
-            patreon = p;
+        patreons.Push(p);
 
-        return patreon;
+        return true;
     }
 
     public void DeRegisterPatreon()
     {
-        patreon = null;
     }
 
 

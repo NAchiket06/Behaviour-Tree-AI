@@ -116,7 +116,7 @@ public class PatreonBehaviour : BTAgent
 
     public Node.Status IsWaiting()
     {
-        if (Blackboard.Instance.RegisterPatreon(this.gameObject) == this.gameObject)
+        if (Blackboard.Instance.RegisterPatreon(this.gameObject))
         {
             return Node.Status.SUCCESS;
         }
