@@ -97,6 +97,7 @@ public class PatreonBehaviour : BTAgent
     public Node.Status GoToHome()       
     {
         Node.Status s = GoToLocation(home.transform.position);
+        ticket = false;
         return s;
     }
 
