@@ -15,7 +15,15 @@ public class Worker : BTAgent
 
         Sequence getPatreon = new("Get Patreon");
         getPatreon.AddChild(allocatePatreon);
-        getPatreon.AddChild(goToPatreon);
+
+        BehaviourTree waiting = new();
+        Leaf patreonStillWaiting = new("Is PatreonWaiting>?", PatreonWaiting);
+        waiting.AddChild(patreonStillWaiting);
+
+        DepSequence moveToPatren = new("Moving to Patreon", waiting, agent);
+        moveToPatren.AddChild(goToPatreon);
+
+        getPatreon.AddChild(moveToPatren);
 
         Selector beWorker = new("Be A Worker");
         beWorker.AddChild(getPatreon);
@@ -29,6 +37,8 @@ public class Worker : BTAgent
 
     public Node.Status PatreonWaiting()
     {
+        if (!Patreon) return Node.Status.FAILURE;
+
         if (Patreon.GetComponent<PatreonBehaviour>().isWaiting) return Node.Status.SUCCESS;
         return Node.Status.FAILURE;
     }

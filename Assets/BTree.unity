@@ -771,6 +771,7 @@ MonoBehaviour:
   home: {fileID: 907398030}
   boredom: 72
   ticket: 0
+  isWaiting: 0
 --- !u!195 &152773336
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -785,7 +786,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 4
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -894,6 +895,7 @@ MonoBehaviour:
   home: {fileID: 907398030}
   boredom: 72
   ticket: 0
+  isWaiting: 0
 --- !u!195 &228141368
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -908,7 +910,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 4
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -2008,6 +2010,7 @@ MonoBehaviour:
   home: {fileID: 907398030}
   boredom: 72
   ticket: 0
+  isWaiting: 0
 --- !u!195 &485902593
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2022,7 +2025,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 4
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -3501,6 +3504,7 @@ MonoBehaviour:
   home: {fileID: 907398030}
   boredom: 72
   ticket: 0
+  isWaiting: 0
 --- !u!195 &885350858
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -3515,7 +3519,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 4
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -4356,7 +4360,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 4
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -4394,6 +4398,7 @@ MonoBehaviour:
   home: {fileID: 907398030}
   boredom: 72
   ticket: 0
+  isWaiting: 0
 --- !u!4 &999459382 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7880970886039044016, guid: d36c43225f9391e4c8810c98eb7ef85e, type: 3}
@@ -4783,6 +4788,7 @@ MonoBehaviour:
   home: {fileID: 907398030}
   boredom: 72
   ticket: 0
+  isWaiting: 0
 --- !u!195 &1066149536
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -4797,7 +4803,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 4
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -5105,6 +5111,7 @@ MonoBehaviour:
   home: {fileID: 907398030}
   boredom: 72
   ticket: 0
+  isWaiting: 0
 --- !u!195 &1108354802
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5119,7 +5126,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 4
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -6329,6 +6336,7 @@ MonoBehaviour:
   home: {fileID: 907398030}
   boredom: 72
   ticket: 0
+  isWaiting: 0
 --- !u!195 &1482820311
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6343,7 +6351,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 4
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -6749,6 +6757,7 @@ MonoBehaviour:
   home: {fileID: 907398030}
   boredom: 72
   ticket: 0
+  isWaiting: 0
 --- !u!195 &1564786652
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6763,7 +6772,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 4
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
