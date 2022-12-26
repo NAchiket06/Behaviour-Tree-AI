@@ -5760,6 +5760,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeOfDay: 9
   clock: {fileID: 601806106}
+  OpenTime: 9
+  CloseTime: 21
 --- !u!1 &1266008648
 GameObject:
   m_ObjectHideFlags: 0

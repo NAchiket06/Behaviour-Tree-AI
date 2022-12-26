@@ -11,9 +11,14 @@ public class Worker : BTAgent
         base.Start();
         Leaf goToPatreon = new("Go To Patreon", GoToPatreon);
         Leaf goToOffice = new("Go To Office", GoToOffice);
+        Leaf allocatePatreon = new("Allocate Patreo", AllocatePatreon);
+
+        Sequence getPatreon = new("Get Patreon");
+        getPatreon.AddChild(allocatePatreon);
+        getPatreon.AddChild(goToPatreon);
 
         Selector beWorker = new("Be A Worker");
-        beWorker.AddChild(goToPatreon);
+        beWorker.AddChild(getPatreon);
         beWorker.AddChild(goToOffice);
 
         tree.AddChild(beWorker);
@@ -21,11 +26,24 @@ public class Worker : BTAgent
     }
 
     GameObject Patreon;
-    public Node.Status GoToPatreon()
+
+    public Node.Status PatreonWaiting()
+    {
+        if (Patreon.GetComponent<PatreonBehaviour>().isWaiting) return Node.Status.SUCCESS;
+        return Node.Status.FAILURE;
+    }
+    public Node.Status AllocatePatreon()
     {
         if (Blackboard.Instance.patreons.Count == 0) return Node.Status.FAILURE;
 
         Patreon = Blackboard.Instance.patreons.Pop();
+        if (Patreon == null) return Node.Status.FAILURE;
+        return Node.Status.SUCCESS;
+    }
+    public Node.Status GoToPatreon()
+    {
+        if (Patreon == null) return Node.Status.FAILURE;
+
         Node.Status s = GoToLocation(Patreon.transform.position);
         if(s == Node.Status.SUCCESS)
         {
@@ -39,6 +57,7 @@ public class Worker : BTAgent
     public Node.Status GoToOffice()
     {
         Node.Status s = GoToLocation(office.transform.position);
+        Patreon = null;
         return s;
     }
 }

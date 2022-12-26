@@ -12,6 +12,7 @@ public class PatreonBehaviour : BTAgent
     [Range(0, 1000)] public int boredom = 0;
 
     public bool ticket = false;
+    public bool isWaiting = false;
 
     public override void Start()
     {
@@ -97,6 +98,7 @@ public class PatreonBehaviour : BTAgent
     public Node.Status GoToHome()       
     {
         Node.Status s = GoToLocation(home.transform.position);
+        isWaiting = false;
         ticket = false;
         return s;
     }
@@ -118,6 +120,7 @@ public class PatreonBehaviour : BTAgent
     {
         if (Blackboard.Instance.RegisterPatreon(this.gameObject))
         {
+            isWaiting = true;
             return Node.Status.SUCCESS;
         }
         else return Node.Status.FAILURE;
